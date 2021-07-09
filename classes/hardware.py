@@ -13,16 +13,17 @@ class Hardware:
         self.realtimeQueue = []
         self.feedbackQueue = [[], [], []]
 
-    def add_process(self, process: Process):
+    def add_process(self, process: Process) -> bool:
         if process is None:
-            return
+            return True
         if not self.memory.add_image(process):
             print("Error: Memory is full")
-            return
+            return False
         if process.priority == 0:
             self.realtimeQueue.append(process)
         else:
             self.feedbackQueue[0].append(process)
+        return True
 
     def remove_process(self, process):
         self.memory.remove_image(process)

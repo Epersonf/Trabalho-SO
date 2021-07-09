@@ -8,11 +8,12 @@ hardware = Hardware(2)
 while True:
     processes = inputReader.get_process_by_time(hardware.time)
     for process in processes:
-        hardware.add_process(process)
+        if not hardware.add_process(process):
+            process.arrivalTime += 1
 
     hardware.update_cpu()
 
     hardware.print_state()
     hardware.clock()
-    time.sleep(2)
+    time.sleep(1)
 

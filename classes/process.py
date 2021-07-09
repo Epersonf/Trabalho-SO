@@ -18,9 +18,11 @@ class Process:
 
     def join_cpu(self, quantum):
         self.quantum = quantum
+        print("Processo", self.PID, "com quantum", self.quantum)
 
     def has_reached_cpu_time(self):
         self.quantum -= 1
+        print("Processo", self.PID, "com quantum atualizado", self.quantum)
         return self.quantum <= 0
 
     def has_ended(self) -> bool:
