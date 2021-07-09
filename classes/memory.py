@@ -5,7 +5,7 @@ class Memory:
         self.loadedProcess = []
 
     def add_image(self, process) -> bool:
-        if self.calculateOccupiedMemory() < self.maxMemory:
+        if self.calculate_occupied_memory() < self.maxMemory:
             self.loadedProcess.append(process)
             return True
         return False
@@ -17,7 +17,7 @@ class Memory:
         return process in self.loadedProcess
 
     def calculate_occupied_memory(self):
-        sumTotal = 0
+        sum_total = 0
         for process in self.loadedProcess:
-            sumTotal += process.sizeMbytes
-        return sumTotal
+            sum_total += process.sizeMbytes
+        return sum_total
