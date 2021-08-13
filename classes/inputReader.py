@@ -13,6 +13,8 @@ class InputReader:
             self.processes.append(Process(params[0], params[1], params[2], params[3], params[4], pid))
             pid += 1
 
+# Função que compara o tempo de execução com o tempo que cada processo chega no sistema, caso sejam iguais, as informações
+# referentes a cada processo é retornada para o programa
     def get_process_by_time(self, t: int):
         processes = []
         for process in self.processes:

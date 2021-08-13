@@ -3,7 +3,7 @@ from classes.inputReader import InputReader
 import time
 
 inputReader = InputReader("./input.txt")
-hardware = Hardware(2)
+hardware = Hardware(2)                  #Criação do objeto para representar o despachante com quantum 2
 
 while True:
     processes = inputReader.get_process_by_time(hardware.time)

@@ -31,6 +31,9 @@ class Hardware:
     def clock(self):
         self.time += 1
 
+# Atualizar a CPU com os processos, também reduzindo deles o tempo de execução.
+# Caso um processo seja executado é retirado os discos necessários do hardware e também a quantidade de memória que
+# está sendo utilizada por cada processo. Ao fim deles eles valores são readicionados.
     def update_cpu(self):
         for i in range(len(self.cpus)):
             self.fill_cpu(i)
@@ -49,6 +52,7 @@ class Hardware:
                     self.cpus[i] = None
                     self.fill_cpu(i)
 
+# Processo adicionado para a CPU, return -> True
     def fill_cpu(self, index) -> bool:
         if self.cpus[index] is None:
             self.cpus[index] = self.dispatcher()
@@ -58,6 +62,8 @@ class Hardware:
                 return True
         return False
 
+# Dispachante busca um processo primeiramente da lista de processos de maior priodade e caso negativo
+# tenta buscar por um processo na lista de prioridade normal.
     def dispatcher(self) -> Process or None:
         process = self.get_process_realtime()
         if process is None:
@@ -67,13 +73,13 @@ class Hardware:
     def get_process_realtime(self) -> Process or None:
         process = None
         for p in self.realtimeQueue:
-            if p.has_needed_io(self.disks):
+            if p.has_needed_io(self.disks): # verifica ser existe memória suficiente para a execução do processo
                 process = p
                 break
             else:
                 print("discos indisponiveis", self.disks, p.ioNeeded)
 
-        if process is not None:
+        if process is not None:  # retira o processo da fila de maior prioridade para ser executado
             self.realtimeQueue.remove(process)
             return process
         return process
@@ -82,11 +88,11 @@ class Hardware:
         process = None
         for i in range(len(self.feedbackQueue)):
             for p in self.feedbackQueue[i]:
-                if p.has_needed_io(self.disks):
+                if p.has_needed_io(self.disks): # verifica ser existe memória suficiente para a execução do processo
                     process = p
                     break
 
-            if process is not None:
+            if process is not None: # retira o processo da fila de prioridade normal para ser executado
                 self.feedbackQueue[i].remove(process)
                 process.previous_queue = i
                 return process
