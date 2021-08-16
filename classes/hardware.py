@@ -44,14 +44,15 @@ class Hardware:
                     self.remove_process(self.cpus[i])
                     self.disks += self.cpus[i].ioNeeded
                     self.cpus[i] = None
-                    self.fill_cpu(i)
                 elif self.cpus[i].priority != 0 and self.cpus[i].has_reached_cpu_time():
                     print("Process", self.cpus[i].PID, " has achieved quantum")
                     queue = (self.cpus[i].previous_queue + 1) % len(self.feedbackQueue)
                     executed[queue].append(self.cpus[i])
                     self.disks += self.cpus[i].ioNeeded
                     self.cpus[i] = None
-                    self.fill_cpu(i)
+
+        for i in range(len(self.cpus)):
+            self.fill_cpu(i)
 
         for i in range(len(executed[0])):
             self.feedbackQueue[0].append(executed[0][i])

@@ -27,6 +27,7 @@ class Process:
 
     def has_ended(self) -> bool:
         self.processorTime -= 1
+        print("Processo", self.PID, "necessita de ", self.processorTime, "segundos de CPU")
         return self.processorTime <= 0
 
     def has_needed_io(self, available_disks) -> bool:
